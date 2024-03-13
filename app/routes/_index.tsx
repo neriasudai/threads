@@ -1,4 +1,9 @@
-import type { MetaFunction } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import type { LoaderFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+import { json } from "drizzle-orm/mysql-core";
+
+import { db, getUsers } from "~/lib/turso";
 
 export const meta: MetaFunction = () => {
   return [
@@ -7,7 +12,19 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+export const loader: LoaderFunction = async () => {
+  // get all users from the database
+
+  const users = await getUsers();
+
+  return {
+    users,
+  };
+};
+
 export default function Index() {
+  const { users } = useLoaderData<typeof loader>();
+  console.log(users);
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <h1>Welcome to Remix</h1>
