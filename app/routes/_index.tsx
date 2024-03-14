@@ -1,5 +1,6 @@
 import { redirect } from "@remix-run/node";
 import type { LoaderFunction } from "@remix-run/node";
+import { useUser } from "@clerk/remix";
 import {
   SignedIn,
   SignedOut,
@@ -9,15 +10,24 @@ import {
 
 import { getAuth } from "@clerk/remix/ssr.server";
 import { db, getUsers, type users, createUserTable, turso } from "~/lib/turso";
+import { useLoaderData } from "@remix-run/react";
 
 export const loader: LoaderFunction = async (args) => {
   const { userId } = await getAuth(args);
+
   if (!userId) {
     return redirect("/sign-in");
   }
-  return {};
+  return { userId };
 };
 export default function Index() {
+  const { userId } = useLoaderData<typeof loader>();
+  const { isLoaded, isSignedIn, user } = useUser();
+  if (!isLoaded || !isSignedIn) {
+    return null;
+  }
+
+  console.log("userId", userId);
   return (
     <div>
       <SignedIn>
@@ -30,10 +40,11 @@ export default function Index() {
         <div className="flex  justify-center items-center flex-col">
           <h1>Index route</h1>
           <p>You are signed in!</p>
+          <p>hey {user.fullName} </p>
         </div>
       </SignedIn>
       <SignedOut>
-        <RedirectToSignIn />
+        <RedirectToSignIn redirectUrl={"/sign-in"} />
       </SignedOut>
     </div>
   );

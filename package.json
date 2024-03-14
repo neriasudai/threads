@@ -9,7 +9,9 @@
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "cross-env NODE_ENV=production node ./server.js",
     "typecheck": "tsc",
-    "seed": "tsx ./app/lib/seed.ts"
+    "seed": "tsx ./app/lib/seed.ts",
+    "db:generate": "drizzle-kit generate:sqlite --schema=./app/lib/schema.ts ",
+    "db:migrate": "drizzle-kit push:sqlite"
   },
   "dependencies": {
     "@clerk/remix": "^3.2.0",
