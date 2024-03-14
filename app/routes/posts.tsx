@@ -4,7 +4,7 @@ export default function Posts() {
   return (
     <main className="container flex h-full min-h-[400px] px-0 pb-12 md:px-8">
       <div className="grid w-full grid-cols-4 bg-muted pl-2 md:container md:rounded-3xl md:pr-0 gap-4">
-        <div className="relative col-span-1  md:rounded-l-3xl bg-slate-300 p-2 rounded-2xl">
+        <div className="relative col-span-1  md:rounded-l-3xl bg-base-200 p-2 rounded-2xl">
           <h1 className="text-3xl font-bold text-pretty">Posts</h1>
           <Link
             to="/posts/new"
@@ -14,7 +14,7 @@ export default function Posts() {
           </Link>
         </div>
 
-        <div className="relative col-span-3 bg-accent md:rounded-r-3xl p-2">
+        <div className="relative col-span-3 bg-base-100 md:rounded-r-3xl p-2">
           <Outlet />
         </div>
       </div>
