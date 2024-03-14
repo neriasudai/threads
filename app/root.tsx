@@ -20,8 +20,8 @@ export const meta: MetaFunction = () => [
 ];
 
 export const loader: LoaderFunction = (args) => rootAuthLoader(args);
-export const ErrorBoundary = ClerkErrorBoundary();
-export function Layout({ children }: { children: React.ReactNode }) {
+
+function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
@@ -47,5 +47,7 @@ function App() {
     </Layout>
   );
 }
+
+export const ErrorBoundary = ClerkErrorBoundary();
 
 export default ClerkApp(App);
