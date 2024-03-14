@@ -8,7 +8,7 @@ import {
 export const Navbar = () => {
   return (
     <div className="w-screen max-h-[10vh] p-2 flex items-center bg-blue-300">
-      Navbar
+      <p className=" font-serif font-semibold  "> Threads</p>
       <SignedIn>
         <div className="w-screen  bg-blue-300 flex justify-end ">
           {" "}

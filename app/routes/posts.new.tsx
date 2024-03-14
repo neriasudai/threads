@@ -12,7 +12,6 @@ import {
   useForm,
 } from "@conform-to/react";
 import { postSchema } from "~/utils/postValidation";
-import { ne } from "drizzle-orm";
 
 export async function action({ request }: ActionFunctionArgs) {
   const body = await request.formData();
@@ -28,8 +27,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
   await insertPost(title, content, userId);
 
-  //   return redirect("/posts");
-  return json({ submission: submission.status });
+  return redirect("/posts");
 }
 
 export default function NewPosts() {
@@ -49,6 +47,7 @@ export default function NewPosts() {
 
       return validate;
     },
+
     shouldRevalidate: "onBlur",
   });
   if (!userId) {
@@ -57,12 +56,6 @@ export default function NewPosts() {
   return (
     <div className="container">
       <h1 className="text-3xl font-bold text-primary">New Post</h1>
-
-      {/* <Form method="POST">
-        <input type="text" id="text"></input>
-        <button type="submit">submit</button>
-      </Form> */}
-
       <Form
         {...getFormProps(form)}
         method="POST"
@@ -71,10 +64,12 @@ export default function NewPosts() {
         <Input
           placeholder="Title"
           {...getInputProps(fields.title, { type: "text" })}
+          errors={fields.title.errors}
         />
         <Input
           placeholder="Post Content"
           {...getInputProps(fields.content, { type: "text" })}
+          errors={fields.content.errors}
         />
         <input
           {...getInputProps(fields.userId, { type: "hidden" })}
