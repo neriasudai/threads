@@ -1,8 +1,9 @@
 import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
-import { sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { text, integer, sqliteTable } from "drizzle-orm/sqlite-core";
 import { posts } from "./schema";
+import { type Post } from "~/utils/postValidation";
 export const turso = createClient({
   url: process.env.TURSO_DATABASE_URL!,
   authToken: process.env.TURSO_AUTH_TOKEN,
@@ -41,4 +42,15 @@ export const insertPost = async (
     .values({ title, content, userId })
     .execute();
   return results;
+};
+
+export const getPosts = async () => {
+  const results = await db.select().from(posts).all();
+  return results;
+};
+
+export const getPost = async (id: number) => {
+  const results = await db.selectDistinct().from(posts).where(eq(posts.id, id));
+
+  return results[0];
 };
