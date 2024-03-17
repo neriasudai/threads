@@ -25,7 +25,7 @@ export default function Posts() {
           <div className=" col-span-3 bg-base-100 md:rounded-3xl p-2 mt-6 ">
             <ul>
               {posts.map((post) => (
-                <li key={post.id} className="p-2 text-ellipsis">
+                <li key={post.id} className="p-2 text-ellipsis text-[1vw]">
                   <Link to={`/posts/${post.id}`}>{post.title}</Link>
                 </li>
               ))}
