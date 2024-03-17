@@ -9,7 +9,17 @@ export const posts = sqliteTable("posts", {
   createdAt: text("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  likes: integer("likes").default(0).notNull(),
+  likes: integer("likes").notNull().default(0),
+});
+
+export const likesRelation = sqliteTable("likes_relation", {
+  userId: text("userId").notNull(),
+  postId: integer("post_id")
+    .notNull()
+    .references(() => posts.id, { onDelete: "cascade" }),
+  createdAt: text("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
 });
 
 export const comments = sqliteTable("comments", {

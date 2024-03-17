@@ -54,3 +54,19 @@ export const getPost = async (id: number) => {
 
   return results[0];
 };
+
+export const addLike = async (id: number) => {
+  // check if the current user has liked the post
+  // if the user has liked the post, then remove the like
+  // if the user has not liked the post, then add the like
+
+  const post = await getPost(id);
+
+  const results = await db
+    .update(posts)
+    .set({ likes: post.likes + 1 })
+    .where(eq(posts.id, id))
+    .execute();
+
+  return results;
+};
