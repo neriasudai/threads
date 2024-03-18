@@ -14,6 +14,7 @@ import {
 import { postSchema } from "~/utils/postValidation";
 
 export async function action({ request }: ActionFunctionArgs) {
+  console.log("action");
   const body = await request.formData();
   console.log(body, "body");
   const submission = parseWithZod(body, { schema: postSchema });
@@ -75,7 +76,7 @@ export default function NewPosts() {
           {...getInputProps(fields.userId, { type: "hidden" })}
           value={userId}
         />
-        <button type="submit" className="btn btn-info" disabled={!form.valid}>
+        <button type="submit" className="btn btn-info">
           Submit
         </button>
       </Form>

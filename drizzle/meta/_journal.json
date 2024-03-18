@@ -15,6 +15,34 @@
       "when": 1710434297684,
       "tag": "0001_left_apocalypse",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1710771925858,
+      "tag": "0002_cloudy_zodiak",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1710772587827,
+      "tag": "0003_fixed_christian_walker",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1710772703815,
+      "tag": "0004_first_arclight",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1710772777190,
+      "tag": "0005_petite_zzzax",
+      "breakpoints": true
     }
   ]
 }

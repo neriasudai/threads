@@ -12,16 +12,6 @@ export const posts = sqliteTable("posts", {
   likes: integer("likes").notNull().default(0),
 });
 
-export const likesRelation = sqliteTable("likes_relation", {
-  userId: text("userId").notNull(),
-  postId: integer("post_id")
-    .notNull()
-    .references(() => posts.id, { onDelete: "cascade" }),
-  createdAt: text("created_at")
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-});
-
 export const comments = sqliteTable("comments", {
   id: integer("id").primaryKey(),
   content: text("content").notNull(),
