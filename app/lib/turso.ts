@@ -1,7 +1,6 @@
 import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
 import { eq, sql } from "drizzle-orm";
-import { text, integer, sqliteTable } from "drizzle-orm/sqlite-core";
 import * as schema from "./schema";
 export const turso = createClient({
   url: process.env.TURSO_DATABASE_URL!,
@@ -83,4 +82,29 @@ export const removeLikeFromPost = async (userId: string, id: number) => {
     post,
     user,
   });
+};
+
+export const addCommentToPost = async (
+  title: string,
+  content: string,
+
+  userId: string,
+  postId: string
+) => {
+  const results = await db
+    .insert(schema.comments)
+    .values({ title, content, userId, postId })
+    .execute();
+
+  return results;
+};
+
+export const getPostComments = async (postId: string) => {
+  const results = await db
+    .select()
+    .from(schema.comments)
+    .where(eq(schema.comments.postId, postId))
+    .all();
+
+  return results;
 };

@@ -15,11 +15,10 @@ export const posts = sqliteTable("posts", {
 
 export const comments = sqliteTable("comments", {
   id: integer("id").primaryKey(),
+  title: text("title").notNull(),
   content: text("content").notNull(),
   userId: text("userId").notNull(),
-  postId: integer("post_id")
-    .notNull()
-    .references(() => posts.id, { onDelete: "cascade" }),
+  postId: text("post_id"),
   createdAt: text("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),

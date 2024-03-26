@@ -1,6 +1,5 @@
 import { useAuth } from "@clerk/remix";
-import { useFetcher, useLoaderData, useParams } from "@remix-run/react";
-import React from "react";
+import { Link, Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import { getPost, addLikeToPost } from "~/lib/turso";
 import { clsx, type ClassValue } from "clsx";
 
@@ -67,11 +66,20 @@ export default function Post() {
               </button>
             </fetcher.Form>
           )}
+          <Link to={`/posts/${post.id}/comment`} className="btn">
+            Add Comment
+          </Link>
         </div>
         {/* {isSignedIn && post.userId === userId && (
           <button className="btn">Edit</button>
         )} */}
       </p>
+      <Link to={"comments"} className="btn">
+        comments
+      </Link>
+      <div className="container">
+        <Outlet />
+      </div>
     </div>
   );
 }
