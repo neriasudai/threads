@@ -10,6 +10,7 @@ export const posts = sqliteTable("posts", {
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
   likes: integer("likes").notNull().default(0),
+  userIdsLiked: text("user_ids_liked").notNull().default("[]"),
 });
 
 export const comments = sqliteTable("comments", {
@@ -26,9 +27,7 @@ export const comments = sqliteTable("comments", {
 
 export const likes = sqliteTable("likes", {
   userId: text("userId").notNull(),
-  postId: integer("post_id")
-    .notNull()
-    .references(() => posts.id, { onDelete: "cascade" }),
+  postId: integer("post_id").notNull(),
   createdAt: text("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),

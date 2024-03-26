@@ -1,7 +1,7 @@
 import { useAuth } from "@clerk/remix";
 import { useFetcher, useLoaderData, useParams } from "@remix-run/react";
 import React from "react";
-import { addLike, getPost } from "~/lib/turso";
+import { getPost, addLikeToPost } from "~/lib/turso";
 import { clsx, type ClassValue } from "clsx";
 
 export const loader = async ({ params }: { params: { id: number } }) => {
@@ -17,15 +17,25 @@ export const loader = async ({ params }: { params: { id: number } }) => {
 export const action = async ({ request }: { request: Request }) => {
   const formData = await request.formData();
   const id = Number(formData.get("id"));
+  const userId = formData.get("userId");
 
-  await addLike(id);
+  await addLikeToPost(userId as string, id);
   return null;
 };
 export default function Post() {
   const post = useLoaderData<typeof loader>();
   const { isSignedIn, userId } = useAuth();
   const fetcher = useFetcher();
-  console.log(post);
+
+  const checkLike = (userId: string) => {
+    const userIds = JSON.parse(post.userIdsLiked);
+    const user = userIds.find((user: string) => user === userId);
+    if (user) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <div className="container p-2">
       <h1 className="text-3xl font-bold text-primary">{post.title}</h1>
@@ -48,11 +58,12 @@ export default function Post() {
                     d="M10 18.5l-1.45-1.32C4.4 13.35 1 10.11 1 6.5 1 3.42 3.42 1 6.5 1c1.74 0 3.41.85 4.5 2.1C11.09 1.85 12.76 1 14.5 1 17.58 1 20 3.42 20 6.5c0 3.61-3.4 6.85-7.55 10.68L10 18.5z"
                     clipRule="evenodd"
                     className={clsx(
-                      post.likes > 0 ? "text-red-500" : "text-gray-500"
+                      checkLike(userId) ? "text-red-500" : "text-gray-500"
                     )}
                   />
                 </svg>
                 <input type="hidden" name="id" value={post.id} />
+                <input type="hidden" name="userId" value={userId} />
               </button>
             </fetcher.Form>
           )}

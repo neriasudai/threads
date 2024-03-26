@@ -14,9 +14,7 @@ import {
 import { postSchema } from "~/utils/postValidation";
 
 export async function action({ request }: ActionFunctionArgs) {
-  console.log("action");
   const body = await request.formData();
-  console.log(body, "body");
   const submission = parseWithZod(body, { schema: postSchema });
 
   if (submission.status !== "success") {
@@ -33,7 +31,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function NewPosts() {
   const lastResult = useActionData<typeof action>();
-  console.log("actionData", lastResult);
+
   const { userId } = useAuth();
 
   const [form, fields] = useForm({
@@ -44,7 +42,7 @@ export default function NewPosts() {
         schema: postSchema,
       });
 
-      console.log("validate", validate);
+      // console.log("validate", validate);
 
       return validate;
     },
@@ -76,7 +74,7 @@ export default function NewPosts() {
           {...getInputProps(fields.userId, { type: "hidden" })}
           value={userId}
         />
-        <button type="submit" className="btn btn-info">
+        <button type="submit" className="btn btn-info" disabled={!form.valid}>
           Submit
         </button>
       </Form>
